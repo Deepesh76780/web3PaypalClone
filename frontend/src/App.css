@@ -1,12 +1,15 @@
 .App {
   min-width: 100%;
-  min-height: 100vh;
+  max-height: 100vh;
+  background: #1a1919;
 }
 
 
 .header {
-  background-color: white;
+  background-color: #1a1919;
   display: flex;
+  color:azure;
+  font-family: "fantasy";
   justify-content: space-between;
   align-items: center;
   padding-left: 100px;
@@ -30,15 +33,17 @@
 
 .logo{
   height: 40px;
+  border-radius: 10px;
 }
 
 .content {
   padding-top: 20px;
   display: flex;
   justify-content: center;
+  height: calc(100vh - 70px);
   align-items: flex-start; 
   gap: 20px;
-  background-color: white;
+  background-color: #1a1919;
 }
 
 .firstColumn {
@@ -95,7 +100,7 @@
 }
 
 .quickOption {
-  background-color: #31579E;
+  background-color: #125d86;
   height:100px;
   width: 100px;
   border-radius: 10px;

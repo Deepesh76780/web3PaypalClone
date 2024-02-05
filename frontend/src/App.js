@@ -72,30 +72,53 @@ function App() {
                   Summary
                 </div>
                 <div className="menuOption">Activity</div>
-                <div className="menuOption">{`Send & Request`}</div>
+                {/* <div className="menuOption">{`Send & Request`}</div>
                 <div className="menuOption">Wallet</div>
-                <div className="menuOption">Help</div>
+                <div className="menuOption">Help</div> */}
               </>
             )}
           </div>
-
           <Button type={"primary"} onClick={handleConnect}>
             {isConnected ? "Disconnect wallet" : "Connect Wallet"}
           </Button>
         </Header>
-        {isConnected && (
-          <Content className="content">
-            <div className="firstColumn">
-              <CurrentBalance dollars={dollars} />
-              <RequestAndPay requests={requests} getNameAndBalance={getNameAndBalance} />
-              <AccountDetails address={address} balance={balance} name={name} />
+        <Content className="content">
+          {isConnected ? (
+            <>
+              <div className="firstColumn">
+                <AccountDetails
+                  address={address}
+                  balance={balance}
+                  name={name}
+                />
+                <RequestAndPay
+                  requests={requests}
+                  getNameAndBalance={getNameAndBalance}
+                />
+                <CurrentBalance dollars={dollars} />
+              </div>
+              <div className="secondColumn">
+                <RecentActivity history={history} />
+              </div>
+            </>
+          ) : (
+            <div style={{ color: "white",transform:"translateY(50%)",height:"100%" }}>
+              Please connect your wallet to continue
             </div>
-            <div className="secondColumn">
-              <RecentActivity history={history} />
-            </div>
-          </Content>
-        )}
+          )}
+        </Content>
       </Layout>
+      <div
+        style={{
+          position: "absolute",
+          bottom: "2px",
+          right: "2px",
+          color: "honeydew",
+          fontSize: "12px",
+        }}
+      >
+        * deployed on sepolia testnet{" "}
+      </div>
     </div>
   );
 }
