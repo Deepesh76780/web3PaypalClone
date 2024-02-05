@@ -6,7 +6,6 @@ import {
   useContractWrite,
   useWaitForTransaction,
 } from "wagmi";
-import { sepolia } from "wagmi/chains";
 import ABI from "../abi.json";
 
 function RequestAndPay({ requests,getNameAndBalance}) {
@@ -17,7 +16,7 @@ function RequestAndPay({ requests,getNameAndBalance}) {
   const [requestMessage, setRequestMessage] = useState("");
 
   const { config } = usePrepareContractWrite({
-    chainId: sepolia.id,
+    chainId: 11155111,
     address: "0x9e2806847Bcc839a9ddB705fc4B8a23674E088Ca",
     abi: ABI,
     functionName: "payRequest",
@@ -30,7 +29,7 @@ function RequestAndPay({ requests,getNameAndBalance}) {
   const { write, data } = useContractWrite(config);
 
   const { config: configRequest } = usePrepareContractWrite({
-    chainId: sepolia.id,
+    chainId: 11155111,
     address: "0x9e2806847Bcc839a9ddB705fc4B8a23674E088Ca",
     abi: ABI,
     functionName: "createRequest",
@@ -84,7 +83,7 @@ function RequestAndPay({ requests,getNameAndBalance}) {
         {requests && requests["0"].length > 0 && (
           <>
             <h2>Sending payment to {requests["3"][0]}</h2>
-            <h3>Value: {requests["1"][0]} Matic</h3>
+            <h3>Value: {requests["1"][0]} ETH</h3>
             <p>"{requests["2"][0]}"</p>
           </>
         )}
@@ -100,7 +99,7 @@ function RequestAndPay({ requests,getNameAndBalance}) {
         okText="Proceed To Request"
         cancelText="Cancel"
       >
-        <p>Amount (Matic)</p>
+        <p>Amount (ETH)</p>
         <InputNumber
           value={requestAmount}
           onChange={(val) => setRequestAmount(val)}
