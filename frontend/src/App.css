@@ -186,6 +186,11 @@
   align-items: center;
   gap: 20px;
 }
+
+.dollar{
+  line-height: 70px;
+}
+
 @media screen and (max-width: 1300px) {
   .header {
     background-color: #1a1919;
@@ -215,4 +220,10 @@
     min-height: 200px;
   }
   
+  .dollar{
+    line-height: 50px;
+    font-size: 40px;
+  }
 }
+
+

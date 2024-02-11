@@ -5,7 +5,7 @@ function CurrentBalance({dollars}) {
   return (
     <Card title="Current Balance" style={{ width: "100%" }}>
       <div className="currentBalance">
-        <div style={{ lineHeight: "70px" }}>$ {dollars}</div>
+        <div className="dollar">$ {dollars}</div>
         <div style={{ fontSize: "20px" }}>Available</div>
       </div>
       <div className="balanceOptions">
