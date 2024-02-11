@@ -34,7 +34,7 @@ function App() {
   }
 
   async function getNameAndBalance() {
-    const res = await axios.get(`http://localhost:3001/getNameAndBalance`, {
+    const res = await axios.get(`http://localhost:5000/getNameAndBalance`, {
       params: { userAddress: address },
     });
 
@@ -63,20 +63,6 @@ function App() {
         <Header className="header">
           <div className="headerLeft">
             <img src={logo} alt="logo" className="logo" />
-            {isConnected && (
-              <>
-                <div
-                  className="menuOption"
-                  style={{ borderBottom: "1.5px solid black" }}
-                >
-                  Summary
-                </div>
-                <div className="menuOption">Activity</div>
-                {/* <div className="menuOption">{`Send & Request`}</div>
-                <div className="menuOption">Wallet</div>
-                <div className="menuOption">Help</div> */}
-              </>
-            )}
           </div>
           <Button type={"primary"} onClick={handleConnect}>
             {isConnected ? "Disconnect wallet" : "Connect Wallet"}
@@ -84,12 +70,13 @@ function App() {
         </Header>
         <Content className="content">
           {isConnected ? (
-            <>
+            <div className="contentBody">
               <div className="firstColumn">
                 <AccountDetails
                   address={address}
                   balance={balance}
                   name={name}
+                  getNameAndBalance={getNameAndBalance}
                 />
                 <RequestAndPay
                   requests={requests}
@@ -100,9 +87,15 @@ function App() {
               <div className="secondColumn">
                 <RecentActivity history={history} />
               </div>
-            </>
+            </div>
           ) : (
-            <div style={{ color: "white",transform:"translateY(50%)",height:"100%" }}>
+            <div
+              style={{
+                color: "white",
+                transform: "translateY(50%)",
+                height: "100%",
+              }}
+            >
               Please connect your wallet to continue
             </div>
           )}
@@ -110,10 +103,11 @@ function App() {
       </Layout>
       <div
         style={{
-          position: "absolute",
+          position: "fixed",
+          zIndex: 100,
           bottom: "2px",
           right: "2px",
-          color: "honeydew",
+          color: "red",
           fontSize: "12px",
         }}
       >

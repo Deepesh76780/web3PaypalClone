@@ -3,8 +3,9 @@ const Moralis = require("moralis").default;
 const app = express();
 const cors = require("cors");
 require("dotenv").config();
-const port = 3001;
+const port = process.env.PORT;
 const ABI = require("./abi.json");
+const path = require("path")
 
 app.use(cors());
 app.use(express.json());
@@ -22,11 +23,13 @@ function convertArrayToObjects(arr) {
   return dataArray.reverse();
 }
 
+const __dirname1 = path.resolve();
+
 app.get("/getNameAndBalance", async (req, res) => {
   const { userAddress } = req.query;
   const response = await Moralis.EvmApi.utils.runContractFunction({
     chain: "11155111",
-    address: "0x9e2806847Bcc839a9ddB705fc4B8a23674E088Ca",
+    address: "0xDC86B539E2707E077774CeA3A7bC58503E16332c",
     functionName: "getMyName",
     abi: ABI,
     params: {
@@ -53,7 +56,7 @@ app.get("/getNameAndBalance", async (req, res) => {
 
   const fourthResponse = await Moralis.EvmApi.utils.runContractFunction({
     chain: "11155111",
-    address: "0x9e2806847Bcc839a9ddB705fc4B8a23674E088Ca",
+    address: "0xDC86B539E2707E077774CeA3A7bC58503E16332c",
     functionName: "getMyHistory",
     abi: ABI,
     params: {
@@ -65,7 +68,7 @@ app.get("/getNameAndBalance", async (req, res) => {
 
   const fiveResponse = await Moralis.EvmApi.utils.runContractFunction({
     chain: "11155111",
-    address: "0x9e2806847Bcc839a9ddB705fc4B8a23674E088Ca",
+    address: "0xDC86B539E2707E077774CeA3A7bC58503E16332c",
     functionName: "getMyRequests",
     abi: ABI,
     params: {
@@ -81,11 +84,21 @@ app.get("/getNameAndBalance", async (req, res) => {
     dollars: jsonThridPrice,
     history: jsonResponseHistory,
     requests: jsonResponseRequests,
-
   };
 
   return res.status(200).json(jsonResponse);
 });
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname1, "../frontend/build")));
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname1, "../frontend", "build", "index.html"))
+  );
+} else {
+  app.get("/", (req, res) => {
+    console.log("API running successfully");
+  });
+}
 
 Moralis.start({
   apiKey: process.env.MORALIS_KEY,

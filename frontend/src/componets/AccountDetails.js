@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card } from "antd";
 import { UserOutlined } from "@ant-design/icons";
-import matic from "../matic.png";
+import eth from "../eth.jpg";
 import { Modal, Input } from "antd";
 import { useState } from "react";
 import {
@@ -11,7 +11,7 @@ import {
 } from "wagmi";
 import ABI from "../abi.json";
 
-function AccountDetails({ address, balance, name }) {
+function AccountDetails({ address, balance, name ,getNameAndBalance}) {
   const [requestModal, setRequestModal] = useState(false);
   const [userName,setUserName]=useState("John")
 
@@ -24,22 +24,28 @@ function AccountDetails({ address, balance, name }) {
 
   const { config } = usePrepareContractWrite({
     chainId: 11155111,
-    address: "0x9e2806847Bcc839a9ddB705fc4B8a23674E088Ca",
+    address: "0xDC86B539E2707E077774CeA3A7bC58503E16332c",
     abi: ABI,
     functionName: "addName",
     args: [userName],
   });
 
   const { write, data } = useContractWrite(config);
-  console.log(data)
+
+  const { isSuccess } = useWaitForTransaction({
+    hash: data?.hash,
+  });
 
 
+  useEffect(() => {
+      getNameAndBalance();
+  },[isSuccess]);
 
 
   return (
     <Card title="Account Details" style={{ width: "100%" }}>
       <Modal
-        title="Set userName"
+        title="Enter Your Name"
         open={requestModal}
         onOk={() => {
           hideRequestModal();
@@ -49,7 +55,6 @@ function AccountDetails({ address, balance, name }) {
         okText="change Name"
         cancelText="Cancel"
       >
-        <p>Enter Your Name</p>
         <Input
           placeholder="John..."
           value={userName}
@@ -70,7 +75,7 @@ function AccountDetails({ address, balance, name }) {
         </div>
       </div>
       <div className="accountDetailRow">
-        <img src={matic} alt="maticLogo" width={25} />
+        <img src={eth} alt="ethLogo" width={25}  />
         <div>
           <div className="accountDetailHead"> Native Ethereum Coin </div>
           <div className="accountDetailBody">{balance} ETH</div>

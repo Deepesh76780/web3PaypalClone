@@ -11,13 +11,13 @@ import ABI from "../abi.json";
 function RequestAndPay({ requests,getNameAndBalance}) {
   const [payModal, setPayModal] = useState(false);
   const [requestModal, setRequestModal] = useState(false);
-  const [requestAmount, setRequestAmount] = useState(5);
+  const [requestAmount, setRequestAmount] = useState(0.1);
   const [requestAddress, setRequestAddress] = useState("");
   const [requestMessage, setRequestMessage] = useState("");
 
   const { config } = usePrepareContractWrite({
     chainId: 11155111,
-    address: "0x9e2806847Bcc839a9ddB705fc4B8a23674E088Ca",
+    address: "0xDC86B539E2707E077774CeA3A7bC58503E16332c",
     abi: ABI,
     functionName: "payRequest",
     args: [0],
@@ -30,10 +30,10 @@ function RequestAndPay({ requests,getNameAndBalance}) {
 
   const { config: configRequest } = usePrepareContractWrite({
     chainId: 11155111,
-    address: "0x9e2806847Bcc839a9ddB705fc4B8a23674E088Ca",
+    address: "0xDC86B539E2707E077774CeA3A7bC58503E16332c",
     abi: ABI,
     functionName: "createRequest",
-    args: [requestAddress, requestAmount, requestMessage],
+    args: [requestAddress, parseInt(requestAmount), requestMessage],
   });
 
   const { write: writeRequest, data: dataRequest } =
@@ -102,6 +102,12 @@ function RequestAndPay({ requests,getNameAndBalance}) {
         <p>Amount (ETH)</p>
         <InputNumber
           value={requestAmount}
+          style={{ width: 200 }}
+          defaultValue="1"
+          min="0"
+          max="10"
+          step="0.01"
+          stringMode
           onChange={(val) => setRequestAmount(val)}
         />
         <p>From (address)</p>

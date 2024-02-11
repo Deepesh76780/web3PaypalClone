@@ -60,8 +60,7 @@ contract Paypal {
         request[] storage myReq  = requests[msg.sender];
         request storage payReq = myReq[_request];
 
-        uint256 toPay = payReq.amount * 1000000000000000000;
-        require(msg.value == (toPay),"pay correct Amount");
+        require(msg.value == (payReq.amount),"pay correct Amount");
 
         payable(payReq.requestor).transfer(msg.value);
         
