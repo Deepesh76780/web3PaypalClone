@@ -34,7 +34,7 @@ function App() {
   }
 
   async function getNameAndBalance() {
-    const res = await axios.get(`http://localhost:5000/getNameAndBalance`, {
+    const res = await axios.get(`https://web3-defi.onrender.com/getNameAndBalance`, {
       params: { userAddress: address },
     });
 
