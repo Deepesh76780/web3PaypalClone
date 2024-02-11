@@ -44,10 +44,11 @@ app.get("/getNameAndBalance", async (req, res) => {
     address: userAddress,
   });
 
+  
   const jsonRespnseBalance = (responseSecond.raw.balance / 1e18).toFixed(2);
 
   const thirdResponse = await Moralis.EvmApi.token.getTokenPrice({
-    address: "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
+    address: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
   });
 
   const jsonThridPrice = (

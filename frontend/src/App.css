@@ -154,6 +154,38 @@
   font-weight: 600;
 }
 
+
+
+.disconnect{
+  color:white;
+}
+
+.loader {
+  width: 30px;
+  height: 30px;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.disconnect-head
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
 @media screen and (max-width: 1300px) {
   .header {
     background-color: #1a1919;

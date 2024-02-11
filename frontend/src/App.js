@@ -1,5 +1,5 @@
 import "./App.css";
-import logo from "./logo.png";
+import logo from "./regex.png";
 import { Layout, Button } from "antd";
 import CurrentBalance from "./componets/CurrentBalance";
 import RequestAndPay from "./componets/RequestAndPay";
@@ -68,9 +68,9 @@ function App() {
             {isConnected ? "Disconnect wallet" : "Connect Wallet"}
           </Button>
         </Header>
-        <Content className="content">
+        <Content className="contentBody">
           {isConnected ? (
-            <div className="contentBody">
+            <>
               <div className="firstColumn">
                 <AccountDetails
                   address={address}
@@ -87,32 +87,31 @@ function App() {
               <div className="secondColumn">
                 <RecentActivity history={history} />
               </div>
-            </div>
+            </>
           ) : (
-            <div
-              style={{
-                color: "white",
-                transform: "translateY(50%)",
-                height: "100%",
-              }}
-            >
-              Please connect your wallet to continue
+            <div className="disconnect-head">
+              <div className="disconnect">
+                Please connect your wallet to continue
+              </div>
+              <div className="loader"></div>
             </div>
           )}
         </Content>
+
+        <div
+          style={{
+            position: "fixed",
+
+            zIndex: 100,
+            bottom: "4px",
+            right: "4px",
+            color: "red",
+            fontSize: "12px",
+          }}
+        >
+          * deployed on sepolia testnet{" "}
+        </div>
       </Layout>
-      <div
-        style={{
-          position: "fixed",
-          zIndex: 100,
-          bottom: "2px",
-          right: "2px",
-          color: "red",
-          fontSize: "12px",
-        }}
-      >
-        * deployed on sepolia testnet{" "}
-      </div>
     </div>
   );
 }
